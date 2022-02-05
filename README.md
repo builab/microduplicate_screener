@@ -24,6 +24,6 @@ python mrcfile, numpy
 You need to run on the mrc file after MotionCorr job. Bin 8 is necessary to reduce the processing time
 Output is a text file contain the name of all the duplicate micrographs
 
-You can then eliminate the duplicate micrographs from star file using some star file manipulator such as ![starparser](https://github.com/sami-chaaban/starparser) from Sami Chabaan 
+You can then eliminate the duplicate micrographs from star file using some star file manipulator such as [starparser](https://github.com/sami-chaaban/starparser) from Sami Chabaan 
 
 Here, for our lab's work flow, we can delete the duplicate micrograph using the script xxx (Not recommended).
