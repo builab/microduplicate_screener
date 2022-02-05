@@ -2,6 +2,7 @@
 Python script to eliminate duplicate micrographs
 Due to the multihole beamshift nature of data collection, sometimes, there are quite some micrographs duplicate. This can lead to slower data processing and lower resolution structure than expected.
 
+## How it works
 The script works in the following way:
 - Normally, the duplicate micrograph would be within next number of micrographs (screenRange, default = 50)
 - First, you need to bin your dataset with bin_all_movies.sh
@@ -13,10 +14,16 @@ The script works in the following way:
 **NOTE:** The bandpass filter is essential for the detection since the imperfect gain normalized background in the micrographs can affect the CCC.
 
 
-##Installation
+## Installation
+
 Software requirement: IMOD
 python mrcfile, numpy
 
-###Running
+## Running
+
 You need to run on the mrc file after MotionCorr job. Bin 8 is necessary to reduce the processing time
 Output is a text file contain the name of all the duplicate micrographs
+
+You can then eliminate the duplicate micrographs from star file using some star file manipulator such as ![starparser](https://github.com/sami-chaaban/starparser) from Sami Chabaan 
+
+Here, for our lab's work flow, we can delete the duplicate micrograph using the script xxx (Not recommended).
