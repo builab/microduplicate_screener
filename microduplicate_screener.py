@@ -56,24 +56,14 @@ if __name__=='__main__':
 	dfmicrograph = df["rlnMicrographName"].copy()
 	
 	
-		
+	# Binning
+	binmicrograph(dfmicrograph, outdir, binning)
 	
 	# loop through micrograph
-	for i in len(dfmicrograph):
-		im = dfmicrograph[i]
-		# Binning
+	for i in len(dfmicrograph):		
 		# Tiltxcorr
-		cmd = sprintf('tiltxcorr -reference %s -input %s -output out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05', im, targetim);
-		im = [imfile.folder '/' imfile.name];
-		imfil = ['out/' strrep(imfile.name, '.mrc', '_fil.mrc')];
-		targetim = [targetimfile.folder '/' targetimfile.name];
-		targetfil = ['out/' strrep(targetimfile.name, '.mrc', '_fil.mrc')];
-		cmd = sprintf('tiltxcorr -reference %s -input %s -output out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05', im, targetim);
-		targetout = ['out/' strrep(targetimfile.name, '.mrc', '_aln.mrc')];
-		cmd2 = sprintf('newstack -in %s -ou %s -xform out.xf', targetim, targetout);
-		cmd3 = sprintf('mtffilter -input %s -output %s -lowpass 0.25,0.05 -highpass 0.04,0.02', targetout, targetfil);
-		cmd4 = sprintf('mtffilter -input %s -output %s -lowpass 0.25,0.05 -highpass 0.04,0.02', im, imfil);
-		system(cmd);
+		print('tiltxcorr')
+
 		
 
 
