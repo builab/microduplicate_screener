@@ -92,6 +92,11 @@ if __name__=='__main__':
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
 		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
+		# Reading image
+		immrc = mrcfile.open(imfil)
+		print(immrc.data[10, 10])
+
+		
 		print("### Scanning duplicate for {:s} ###".format(im))
 		if i + screenrange > len(dfmicrograph):
 			topend = len(dfmicrograph)
@@ -104,10 +109,12 @@ if __name__=='__main__':
 			tiltxcorr(im, target, outdir)
 			# Filter target & return fil name
 			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
+			targetmrc = mrcfile.open(targetfil)
 			# Corr correlation
-			mrc = mrcfile.open(imfil)
-			print(mrc.data.size)
-			ccc[i, j-i-1] = np.corrcoef(mrcfile.open(imfil).data, mrcfile.open(targetfil).data)
+			ccc[i, j-i-1] = np.corrcoef(immrc.data, targetmrc.data)
+			targetmrc.close()
+		immrc.close()
+			
 			
 	
 	numpy.savetxt("ccc.csv", ccc, delimiter=",")
