@@ -76,14 +76,15 @@ if __name__=='__main__':
 	else:
 		df = stardict['micrographs']
 		
-	dfmicrograph = df["rlnMicrographName"].copy()
+	dfmicrograph = df["rlnMicrographName"].sort_values(by=['rlnMicrographName'])copy()
 	
-	#print(dfmicrograph)
+	print(dfmicrograph)
 	
+	exit(0)
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
-	#binmicrograph(dfmicrograph, outdir, binning)
+	binmicrograph(dfmicrograph, outdir, binning)
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
@@ -95,9 +96,7 @@ if __name__=='__main__':
 		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
 		# Reading image
 		immrc = mrcfile.open(imfil)
-		#print(immrc.data[1:10, :10])
-		#exit(0)
-
+		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
 		if i + screenrange > len(dfmicrograph):
