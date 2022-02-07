@@ -106,7 +106,7 @@ if __name__=='__main__':
 			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
 			# Corr correlation
 			mrc = mrcfile.open(imfil)
-			print(mrc.data.ndim)
+			print(mrc.data.size)
 			ccc[i, j-i-1] = np.corrcoef(mrcfile.open(imfil).data, mrcfile.open(targetfil).data)
 			
 	
