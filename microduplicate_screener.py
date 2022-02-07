@@ -85,7 +85,7 @@ if __name__=='__main__':
 	print("Binning data by {:d}".format(binning))
 	binmicrograph(dfmicrograph, outdir, binning)
 	
-	ccc = np.zeros(i, screenrange);
+	ccc = np.zeros(len(dfmicrograph), screenrange);
 	
 	# loop through micrograph
 	for i in range(len(dfmicrograph)):
