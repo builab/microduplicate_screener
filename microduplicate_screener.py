@@ -119,7 +119,7 @@ if __name__=='__main__':
 			
 			
 	
-	numpy.savetxt("ccc.csv", ccc, delimiter=",")
+	np.savetxt("ccc.csv", ccc, delimiter=",")
 
 		
 
