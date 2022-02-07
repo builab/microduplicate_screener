@@ -34,8 +34,6 @@ if __name__=='__main__':
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
 	parser.add_argument('--threshold', help='CCC threshold to set as duplicate',required=False,default=0.25)
 
-
-
 	args = parser.parse_args()
 	
 	outdir= open(args.outdir, 'w')
@@ -62,9 +60,7 @@ if __name__=='__main__':
 		# Binning
 		# Tiltxcorr
 		cmd = sprintf('tiltxcorr -reference %s -input %s -output out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05', im, targetim);
-
-		filterim = 
-				im = [imfile.folder '/' imfile.name];
+		im = [imfile.folder '/' imfile.name];
 		imfil = ['out/' strrep(imfile.name, '.mrc', '_fil.mrc')];
 		targetim = [targetimfile.folder '/' targetimfile.name];
 		targetfil = ['out/' strrep(targetimfile.name, '.mrc', '_fil.mrc')];
