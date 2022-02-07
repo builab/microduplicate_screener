@@ -29,13 +29,22 @@ def tiltxcorr(ref, target, outdir):
 	targetout = target.replace(".mrc", "_xf.mrc");
 	shiftcmd = "newstack -in {:s} -ou {:s} -xform {:s}/out.xf".format(target, targetout, outdir);
 	print(shiftcmd)
-	#os.system(tiltxcorrcmd)
-	#os.system(shiftcmd)
+	os.system(tiltxcorrcmd)
+	os.system(shiftcmd)
+	
+def bandpassfilter(im, outdir, lowpass, lpsigma, highpass, hpsigma):
+	''' filtering micrograph. Change value to adjust'''
+	imfil = im.replace(".mrc", "_fil.mrc")
+	filtcmd = "mtffilter -input %s -output %s -lowpass {:0.2f},{:0.2f} -highpass {:0.2f},{:0.2f}".format(im, imfil, lowpass, lpsigma, highpass, hpsigma);
+	print(filtcmd)
+	os.system(filtcmd)
+	return imfil
 		
 
 
 if __name__=='__main__':
 	# get name of input starfile, output starfile, output stack file
+	print("Remember to load IMOD before")
 	
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
@@ -68,19 +77,31 @@ if __name__=='__main__':
 	print("Binning data by {:d}".format(binning))
 	binmicrograph(dfmicrograph, outdir, binning)
 	
+	ccc = np.zeros(i, screenrange);
+	
 	# loop through micrograph
 	for i in range(len(dfmicrograph)):
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
+		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
 		print("### Scanning duplicate for {:s} ###".format(im))
 		if i + screenrange > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
 			topend = i + screenrange
+		
 		for j in range(i+1, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			# Tiltxcorr
 			tiltxcorr(im, target, outdir)
+			# Filter target & return fil name
+			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
+			# Corr correlation
+			ccc[i, j-i-1] = np.corrcoeff(mrcfile.open(imfil), mrcfile.open(targetfil))
+			
+	
+	numpy.savetxt("ccc.csv", ccc, delimiter=",")
+
 		
 
 
