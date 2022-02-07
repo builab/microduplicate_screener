@@ -118,12 +118,10 @@ if __name__=='__main__':
 			targetmrc.close()
 		immrc.close()
 		# Pick out the most similar one
-		peak = np.argmax(ccc[i, :], axis=0)
+		peak = np.argmax(ccc[i, :])
 		print(peak)
-		peak = np.argmax(ccc[i, :], axis=1)
-		print(peak)
-		if ccc(i, peak) > threshold:
-			duplist.append(i)
+		if ccc[i, peak] > threshold:
+			duplist.append(i + peak + 1)
 			
 			
 	
