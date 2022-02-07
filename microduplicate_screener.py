@@ -19,7 +19,14 @@ def binmicrograph(dfmicrograph, outdir, binning):
 	for i in range(len(dfmicrograph)):
 		bincmd = "newstack -bin {:d} {:s} {:s}".format(binning, dfmicrograph[i], outdir + '/' + os.path.basename(dfmicrograph[i]))
 		print(bincmd)
-		#os.system(bincmd)
+		os.system(bincmd)
+		
+
+def tiltxcorr(ref, target, outdir):
+	''' Correlate micrograph'''
+	tiltxcorrcmd = "tiltxcorr -reference {:s} -input {:s} -output {:s}/out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05".format(ref, target, outdir);
+	print(tiltxcorrcmd)
+	#os.system(tiltxcorrcmd)
 		
 
 
@@ -37,7 +44,7 @@ if __name__=='__main__':
 	args = parser.parse_args()
 	
 	#outdir= open(args.outdir, 'w')
-	outdir = 'dupsreener'
+	outdir = args.outdir
 	binning = int(args.bin)
 	screenrange = int(args.scanrange)
 	threshold = float(args.threshold)
@@ -58,10 +65,13 @@ if __name__=='__main__':
 	binmicrograph(dfmicrograph, outdir, binning)
 	
 	# loop through micrograph
-	for i in range(len(dfmicrograph)):		
-		# Tiltxcorr
-		print('tiltxcorr')
-
+	for i in range(len(dfmicrograph)):
+		# Define range
+		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
+		for j in range(i+1, i+screenrange):
+			target = outdir + '/' os.path.basename(dfmicrograph[j])
+			# Tiltxcorr
+			tiltxcorr(im, target, outdir)
 		
 
 
