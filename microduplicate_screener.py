@@ -87,6 +87,7 @@ if __name__=='__main__':
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
+	duplist = {}
 	# loop through micrograph
 	for i in range(len(dfmicrograph)):
 		# Define range
@@ -116,10 +117,15 @@ if __name__=='__main__':
 			ccc[i, j-i-1] = r[1, 0]
 			targetmrc.close()
 		immrc.close()
+		# Pick out the most similar one
+		peak = np.argmax(ccc[i, :])
+		if ccc(i, peak) > threshold
+			duplist.append(i)
 			
 			
 	
 	np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
+	dfmicrograph[duplist].to_csv('duplicate.csv')
 
 		
 
