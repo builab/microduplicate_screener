@@ -78,14 +78,14 @@ if __name__=='__main__':
 		
 	dfmicrograph = df["rlnMicrographName"].copy()
 	
-	print(dfmicrograph)
+	#print(dfmicrograph)
 	
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
 	binmicrograph(dfmicrograph, outdir, binning)
 	
-	ccc = np.zeros(len(dfmicrograph), screenrange);
+	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
 	# loop through micrograph
 	for i in range(len(dfmicrograph)):
