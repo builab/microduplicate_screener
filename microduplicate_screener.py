@@ -105,7 +105,10 @@ if __name__=='__main__':
 			# Filter target & return fil name
 			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
 			# Corr correlation
-			ccc[i, j-i-1] = np.corrcoef(mrcfile.open(imfil), mrcfile.open(targetfil))
+			mrc = mrcfile.open(imfil)
+			print(type(mrc))
+			print(type(mrc.data))
+			ccc[i, j-i-1] = np.corrcoef(mrcfile.open(imfil).data, mrcfile.open(targetfil).data)
 			
 	
 	numpy.savetxt("ccc.csv", ccc, delimiter=",")
