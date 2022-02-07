@@ -119,7 +119,7 @@ if __name__=='__main__':
 		immrc.close()
 		# Pick out the most similar one
 		peak = np.argmax(ccc[i, :])
-		if ccc(i, peak) > threshold
+		if ccc(i, peak) > threshold:
 			duplist.append(i)
 			
 			
