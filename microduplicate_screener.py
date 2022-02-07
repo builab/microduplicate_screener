@@ -78,9 +78,8 @@ if __name__=='__main__':
 		
 	dfmicrograph = df["rlnMicrographName"].sort_values(ignore_index=True).copy()
 	
-	print(dfmicrograph)
-	
-	exit(0)
+	#print(dfmicrograph)
+	#exit(0)
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
