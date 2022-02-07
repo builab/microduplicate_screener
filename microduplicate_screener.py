@@ -9,9 +9,8 @@ Micrograph duplicate screener
 """
 
 import numpy as np
-import os
+import errno, os, argparse
 import starfile
-import argparse
 import mrcfile
 
 def binmicrograph(dfmicrograph, outdir, binning):
@@ -61,6 +60,15 @@ if __name__=='__main__':
 	binning = int(args.bin)
 	screenrange = int(args.scanrange)
 	threshold = float(args.threshold)
+	
+
+
+	try:
+		os.mkdir(outdir)
+	except OSError as exc:
+		if exc.errno != errno.EEXIST:
+			raise
+		pass
 	
 	stardict = starfile.read(args.i)
 	if (args.opticsless == "1"):
