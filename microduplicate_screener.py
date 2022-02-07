@@ -26,7 +26,11 @@ def tiltxcorr(ref, target, outdir):
 	''' Correlate micrograph'''
 	tiltxcorrcmd = "tiltxcorr -reference {:s} -input {:s} -output {:s}/out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05".format(ref, target, outdir);
 	print(tiltxcorrcmd)
+	targetout = target.replace(".mrc", "_xf.mrc");
+	shiftcmd = "newstack -in {:s} -ou {:s} -xform {:s}/out.xf".format(target, targetout, outdir);
+	print(shiftcmd)
 	#os.system(tiltxcorrcmd)
+	#os.system(shiftcmd)
 		
 
 
