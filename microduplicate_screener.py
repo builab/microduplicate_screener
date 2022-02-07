@@ -21,6 +21,12 @@ def binmicrograph(dfmicrograph, outdir, binning):
 		print(bincmd)
 		os.system(bincmd)
 		
+def binsinglemicrograph(micrograph, outdir, binning):
+	''' Binning the micrograph'''
+	bincmd = "newstack -bin {:d} {:s} {:s}".format(binning, micrograph, outdir + '/' + os.path.basename(micrograph))
+	print(bincmd)
+	os.system(bincmd)
+		
 
 def tiltxcorr(ref, target, outdir):
 	''' Correlate micrograph'''
@@ -80,14 +86,22 @@ if __name__=='__main__':
 		df = stardict['micrographs']
 		
 	dfmicrograph = df["rlnMicrographName"].sort_values(ignore_index=True).copy()
-	
+	nomicro = len(dfmicrograph)
 	#print(dfmicrograph)
 	#exit(0)
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
 	pool = mp.Pool(nocpu)
-	binmicrograph(dfmicrograph, outdir, binning)
+	# Prep input
+	listmicro = dfmicrograph.to_list()
+	iteroutdir = [outdir]*nomicro
+	iterbinning = [binning]*nomicro
+	print(listmicro)
+	print(iteroutdir)
+	print(iterbinning)
+	
+	pool.starmap(binsinglemicrograph()
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
