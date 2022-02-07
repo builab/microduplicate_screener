@@ -94,7 +94,8 @@ if __name__=='__main__':
 		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
 		# Reading image
 		immrc = mrcfile.open(imfil)
-		print(immrc.data[10, 10])
+		print(immrc.data[1:10, :10])
+		exit(0)
 
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
