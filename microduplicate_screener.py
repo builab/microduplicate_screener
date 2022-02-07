@@ -17,7 +17,7 @@ import mrcfile
 def binmicrograph(dfmicrograph, binning):
 	''' Binning the micrograph'''
 	for i in len(dfmicrograph):
-		bincmd = "newstack -bin {%d} {%s} {%s}".format(binning, dfmicrograph[i], outdir + '/' dfmicrograph[i])
+		bincmd = "newstack -bin {%d} {%s} {%s}".format(binning, dfmicrograph[i], outdir + '/' + dfmicrograph[i])
 		print(bincmd)
 		#os.system(bincmd)
 		
