@@ -14,7 +14,7 @@ import starfile
 import argparse
 import mrcfile
 
-def binmicrograph(dfmicrograph, binning):
+def binmicrograph(dfmicrograph, outdir, binning):
 	''' Binning the micrograph'''
 	for i in len(dfmicrograph):
 		bincmd = "newstack -bin {%d} {%s} {%s}".format(binning, dfmicrograph[i], outdir + '/' + dfmicrograph[i])
@@ -28,7 +28,7 @@ if __name__=='__main__':
 	
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
- 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
+ 	#parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="1")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
@@ -36,7 +36,8 @@ if __name__=='__main__':
 
 	args = parser.parse_args()
 	
-	outdir= open(args.outdir, 'w')
+	#outdir= open(args.outdir, 'w')
+	outdir = 'dupsreener'
  	binning = int(args.bin)
 	screenrange = int(args.scanrange)
 	threshold = float(args.threshold)
