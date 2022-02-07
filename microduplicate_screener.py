@@ -94,8 +94,8 @@ if __name__=='__main__':
 		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
 		# Reading image
 		immrc = mrcfile.open(imfil)
-		print(immrc.data[1:10, :10])
-		exit(0)
+		#print(immrc.data[1:10, :10])
+		#exit(0)
 
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
@@ -112,7 +112,8 @@ if __name__=='__main__':
 			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
 			targetmrc = mrcfile.open(targetfil)
 			# Corr correlation
-			ccc[i, j-i-1] = np.corrcoef(immrc.data, targetmrc.data)
+			r = np.corrcoef(immrc.data.flat(), targetmrc.data.flat())
+			ccc[i, j-i-1] = r[1, 0]
 			targetmrc.close()
 		immrc.close()
 			
