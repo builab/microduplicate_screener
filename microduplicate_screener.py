@@ -72,7 +72,12 @@ if __name__=='__main__':
 	for i in range(len(dfmicrograph)):
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
-		for j in range(i+1, i+screenrange):
+		print("Scanning duplicate for {:s}".format(im))
+		if i + screenrange > len(dfmicrograph):
+			topend = len(dfmicrograph)
+		else:
+			topend = i + screenrange
+		for j in range(i+1, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			# Tiltxcorr
 			tiltxcorr(im, target, outdir)
