@@ -83,7 +83,7 @@ if __name__=='__main__':
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
-	binmicrograph(dfmicrograph, outdir, binning)
+	#binmicrograph(dfmicrograph, outdir, binning)
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
@@ -118,7 +118,10 @@ if __name__=='__main__':
 			targetmrc.close()
 		immrc.close()
 		# Pick out the most similar one
-		peak = np.argmax(ccc[i, :])
+		peak = np.argmax(ccc[i, :], axis=0)
+		print(peak)
+		peak = np.argmax(ccc[i, :], axis=1)
+		print(peak)
 		if ccc(i, peak) > threshold:
 			duplist.append(i)
 			
