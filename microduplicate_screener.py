@@ -9,6 +9,7 @@ Micrograph duplicate screener
 """
 
 import numpy as np
+import multiprocessing as mp
 import errno, os, argparse
 import starfile
 import mrcfile
@@ -52,11 +53,13 @@ if __name__=='__main__':
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="1")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
 	parser.add_argument('--threshold', help='CCC threshold to set as duplicate',required=False,default=0.20)
+	parser.add_argument('--j', help='Number of processors',required=False,default=1)
+
 
 	args = parser.parse_args()
 	
-	#outdir= open(args.outdir, 'w')
 	outdir = args.outdir
+	nocpu = int(args.j)
 	binning = int(args.bin)
 	screenrange = int(args.scanrange)
 	threshold = float(args.threshold)
@@ -83,6 +86,7 @@ if __name__=='__main__':
 	
 	# Binning
 	print("Binning data by {:d}".format(binning))
+	pool = mp.Pool(nocpu)
 	binmicrograph(dfmicrograph, outdir, binning)
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
@@ -128,5 +132,9 @@ if __name__=='__main__':
 
 		
 
-
+	pool.map(align2d, liststar, 1) 
+	
+	# Done parallel processing
+	pool.close()
+	pool.join()
 	
