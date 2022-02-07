@@ -39,8 +39,11 @@ if __name__=='__main__':
 	#outdir= open(args.outdir, 'w')
 	outdir = 'dupsreener'
  	binning = int(args.bin)
+	
 	screenrange = int(args.scanrange)
+	
 	threshold = float(args.threshold)
+	
 	
 	
 	
