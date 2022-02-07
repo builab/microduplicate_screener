@@ -94,14 +94,21 @@ if __name__=='__main__':
 	print("Binning data by {:d}".format(binning))
 	pool = mp.Pool(nocpu)
 	# Prep input
-	listmicro = dfmicrograph.to_list()
-	iteroutdir = [outdir]*nomicro
-	iterbinning = [binning]*nomicro
-	print(listmicro)
-	print(iteroutdir)
-	print(iterbinning)
+	dfbin = dfmicrograph.copy()
+	listoutdir = [outdir]*nomicro
+	listbinning = [binning]*nomicro
+	dfbin['Outdir'] = listoutdir
+	dfbin['Binning'] = listbinning
+	# Convert to tuple
+	records = dfbin.to_records(index=False)
+	listbinargs = list(records)
+
+	# Parallel binning
+	pool.starmap(binsinglemicrograph, listbinargs)
 	
-	pool.starmap(binsinglemicrograph()
+	pool.close()
+	pool.join()
+	
 	
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
@@ -146,9 +153,6 @@ if __name__=='__main__':
 
 		
 
-	pool.map(align2d, liststar, 1) 
 	
 	# Done parallel processing
-	pool.close()
-	pool.join()
-	
+
