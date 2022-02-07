@@ -34,7 +34,7 @@ def tiltxcorr(ref, target, outdir):
 def bandpassfilter(im, outdir, lowpass, lpsigma, highpass, hpsigma):
 	''' filtering micrograph. Change value to adjust'''
 	imfil = im.replace(".mrc", "_fil.mrc")
-	filtcmd = "mtffilter -input %s -output %s -lowpass {:0.2f},{:0.2f} -highpass {:0.2f},{:0.2f}".format(im, imfil, lowpass, lpsigma, highpass, hpsigma);
+	filtcmd = "mtffilter -input {:s} -output {:s} -lowpass {:0.2f},{:0.2f} -highpass {:0.2f},{:0.2f}".format(im, imfil, lowpass, lpsigma, highpass, hpsigma);
 	print(filtcmd)
 	os.system(filtcmd)
 	return imfil
