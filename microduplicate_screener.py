@@ -76,7 +76,7 @@ if __name__=='__main__':
 	else:
 		df = stardict['micrographs']
 		
-	dfmicrograph = df["rlnMicrographName"].sort_values().copy()
+	dfmicrograph = df["rlnMicrographName"].sort_values(ignore_index=True).copy()
 	
 	print(dfmicrograph)
 	
