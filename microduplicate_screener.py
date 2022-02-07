@@ -25,11 +25,10 @@ def binmicrograph(dfmicrograph, binning):
 
 if __name__=='__main__':
 	# get name of input starfile, output starfile, output stack file
-	print('WARNING: Only compatible with Relion 3.1 star file & McGill pattern of holes')
 	
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
- 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False, default='dupscreener')
+ 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False, default="dupscreener")
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="1")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
