@@ -73,7 +73,7 @@ if __name__=='__main__':
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
 		for j in range(i+1, i+screenrange):
-			target = outdir + '/' os.path.basename(dfmicrograph[j])
+			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			# Tiltxcorr
 			tiltxcorr(im, target, outdir)
 		
