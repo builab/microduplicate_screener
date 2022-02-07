@@ -39,13 +39,8 @@ if __name__=='__main__':
 	#outdir= open(args.outdir, 'w')
 	outdir = 'dupsreener'
 	binning = int(args.bin)
-	
 	screenrange = int(args.scanrange)
-	
 	threshold = float(args.threshold)
-	
-	
-	
 	
 	stardict = starfile.read(args.i)
 	if (args.opticsless == "1"):
@@ -54,6 +49,8 @@ if __name__=='__main__':
 		df = stardict['micrographs']
 		
 	dfmicrograph = df["rlnMicrographName"].copy()
+	
+	print(dfmicrograph)
 	
 	
 	# Binning
