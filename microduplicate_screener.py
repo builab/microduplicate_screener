@@ -72,7 +72,7 @@ if __name__=='__main__':
 	for i in range(len(dfmicrograph)):
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
-		print("Scanning duplicate for {:s}".format(im))
+		print("### Scanning duplicate for {:s} ###".format(im))
 		if i + screenrange > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
