@@ -28,7 +28,7 @@ if __name__=='__main__':
 	
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
- 	#parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
+	parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="1")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
@@ -38,7 +38,7 @@ if __name__=='__main__':
 	
 	#outdir= open(args.outdir, 'w')
 	outdir = 'dupsreener'
- 	binning = int(args.bin)
+	binning = int(args.bin)
 	
 	screenrange = int(args.scanrange)
 	
