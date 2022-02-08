@@ -176,7 +176,7 @@ if __name__=='__main__':
 			listccc[x] = result[x]
 			
 		# Write CSV row
-		writer.writerow(listccc)
+		writer.writerow(['{:1.4f}'.format(x) for x in listccc])
 		
 		# Pick out the most similar one
 		peak = np.argmax(listccc)
