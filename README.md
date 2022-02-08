@@ -37,7 +37,9 @@ Easy installation involved anaconda:
 You need to run on the mrc file after MotionCorr job. Bin 8 is necessary to reduce the processing time
 Output is a csv file contain the name of all the duplicate micrographs
 
+```
 python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002/corrected_micrographs.star --bin 8 --scanrange 34 --imagespermove 16 --imagesperhole 4 --j 12 --csvout duplicate.csv
+```
 
 **--bin 8**: Binning of the original micrographs
 **--scanrange 34** Should be multiple of imagespermove + 1
@@ -48,13 +50,13 @@ python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002
 
 It takes about 2hr to scan through 5000 images from Gatan K3 collected in non-superresolution mode with 12 cores.
 
-You can also use the slurm_dupscanner.sh for slurm submission_
+You can also use the slurm_dupscanner.sh for SLURM submission
 
 You can then eliminate the duplicate micrographs from star file using some star file manipulator such as [starparser](https://github.com/sami-chaaban/starparser) from Sami Chabaan.
 
 ### Extract duplicate micrographs only
-'''
+```
 grep -v 'Duplicate'  duplicate.csv | awk '{print $2}' > micrographs_to_be_removed.txt
 
 starparser --i MotionCorr/job002/corrected_micrographs.star --o clean_micrographs.star --remove_mics_fromlist --f micrographs_to_be_removed.txt 
-'''
+```
