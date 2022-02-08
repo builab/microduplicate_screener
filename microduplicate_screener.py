@@ -95,7 +95,7 @@ if __name__=='__main__':
 	print("Binning data by {:d}".format(binning))
 	pool = mp.Pool(nocpu)
 	# Prep input
-	dfbin = dfmicrograph.copy()
+	dfbin = dfmicrograph.to_frame()
 	listoutdir = [outdir]*nomicro
 	listbinning = [binning]*nomicro
 	dfbin['Outdir'] = listoutdir
