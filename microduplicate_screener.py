@@ -191,7 +191,7 @@ if __name__=='__main__':
 
 	csv_file.close()
 	#np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
-	dfmicrograph[duplist].to_csv('duplicate.csv')
+	dfmicrograph[duplist].to_csv('duplicate.csv', index=False)
 
 	# Done parallel processing
 	pool.close()
