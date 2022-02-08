@@ -144,7 +144,7 @@ if __name__=='__main__':
 		
 	duplist = []
 	origlist = []
-	csv_file = open(csvout, "w")
+	csv_file = open("ccc.csv", "w")
 	writer = csv.writer(csv_file)
 	
 	# loop through micrograph
@@ -210,7 +210,7 @@ if __name__=='__main__':
 
 	dffinallist = pd.DataFrame({'Original': dfmicrograph[origlist].values.tolist(), 'Duplicate': dfmicrograph[duplist].values.tolist()})
 	
-	dffinallist.to_csv('duplicate.csv', index=False)
+	dffinallist.to_csv(csvout, index=False)
 
 	# Done parallel processing
 	pool.close()
