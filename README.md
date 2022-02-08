@@ -55,6 +55,8 @@ python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002
 
 **--threshold 0.2** CCC threshold
 
+**--opticsless 1** Only use for Relion star lower than 3.0 (default 0)
+
 
 It takes about 2hr to scan through 5000 images from Gatan K3 collected in non-superresolution mode with 12 cores.
 
