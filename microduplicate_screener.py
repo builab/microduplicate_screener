@@ -143,6 +143,7 @@ if __name__=='__main__':
 	pool.starmap(binsinglemicrograph, listbinargs)
 		
 	duplist = []
+	origlist = []
 	csv_file = open(csvout, "w")
 	writer = csv.writer(csv_file)
 	
@@ -194,13 +195,17 @@ if __name__=='__main__':
 		print(peak)
 		if listccc[peak] > threshold:
 			duplist.append(i + peak + 1)
+			origlist.append(i)
 			
 			
 	
 
 	csv_file.close()
 	#np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
-	dfmicrograph[duplist].to_csv('duplicate.csv', index=False, header=False)
+	dffinallist = pd.DataFrame({'Original': dfmicrograph[origlist].values.to_list(),
+                   'Duplicate': dfmicrograph[duplist].values.to_list()}
+	
+	dffinallist.to_csv('duplicate.csv', index=False)
 
 	# Done parallel processing
 	pool.close()
