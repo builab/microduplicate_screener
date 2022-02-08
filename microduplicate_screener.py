@@ -194,7 +194,7 @@ if __name__=='__main__':
 		peak = np.argmax(listccc)
 		print(peak)
 		if listccc[peak] > threshold:
-			duplist.append(i + peak + 1)
+			duplist.append(i + imagespermove + peak)
 			origlist.append(i)
 			
 			
