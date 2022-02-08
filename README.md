@@ -45,7 +45,7 @@ python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002
 
 **--scanrange 34** Should be multiple of imagespermove + 1
 
-**--imagespermove 16** Number of images per stage movement. Set this to 0 to be really exhausive
+**--imagespermove 16** Number of images per stage movement. Set this to 1 to be really exhausive
 
 **--imagesperhole 4**  Number of images per hole
 
