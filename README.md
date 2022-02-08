@@ -42,11 +42,17 @@ python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002
 ```
 
 **--bin 8**: Binning of the original micrographs
+
 **--scanrange 34** Should be multiple of imagespermove + 1
+
 **--imagespermove 16** Number of images per stage movement
+
 **--imagesperhole 4**  Number of images per hole
+
 **--csvout duplicate.csv** Output csv file showing the original & duplicate micrographs
+
 **--j 12** Number of cores used
+
 
 It takes about 2hr to scan through 5000 images from Gatan K3 collected in non-superresolution mode with 12 cores.
 
