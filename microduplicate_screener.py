@@ -143,7 +143,7 @@ if __name__=='__main__':
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
 		# Create empty list
-		imfil = bandpassfilter(ref, outdir)
+		imfil = bandpassfilter(im, outdir)
 		
 		listccc = [0]*scanrange
 		scanlist = []
