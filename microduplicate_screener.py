@@ -159,7 +159,7 @@ if __name__=='__main__':
 		print(list(zip(listim, scanlist, listoutdir)))
 		
 		# Parallel
-		pool.starmap(match, list(zip(listim, scanlist, listoutdir)))
+		pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
 		
 		# Pick out the most similar one
 		peak = np.argmax(ccc[i, :])
