@@ -5,7 +5,7 @@
 Created on Sat Feb	5 17:35:42 2022
 
 Micrograph duplicate screener
-Need to introduce an offset = no_images_per_hole
+Need to introduce an offset = no_images_per_move
 @author: kbui2
 """
 
@@ -155,21 +155,21 @@ if __name__=='__main__':
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
-		if i + imagesperhole >= len(dfmicrograph):
+		if i + imagespermove >= len(dfmicrograph):
 			break
 			
-		if i + imagesperhole + scanrange  > len(dfmicrograph):
+		if i + imagespermove + scanrange  > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
-			topend = i + imagesperhole + scanrange
+			topend = i + imagespermove + scanrange
 		
 		
-		for j in range(i+imagesperhole, topend):
+		for j in range(i+imagespermove, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			scanlist.append(target)
 			
-		listim = [im]*(topend - i - imagesperhole)
-		listoutdir = [outdir]*(topend - i - imagesperhole)
+		listim = [im]*(topend - i - imagespermove)
+		listoutdir = [outdir]*(topend - i - imagespermove)
 		
 		# Check
 		print(list(zip(listim, scanlist, listoutdir)))
