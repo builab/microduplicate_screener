@@ -202,11 +202,11 @@ if __name__=='__main__':
 
 	csv_file.close()
 	#np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
-	dfmicrograph[origlist].to_csv('original.csv', index=False)
-	dfmicrograph[duplist].to_csv('duplicate.csv', index=False)
+	#dfmicrograph[origlist].to_csv('original.csv', index=False)
+	#dfmicrograph[duplist].to_csv('duplicate.csv', index=False)
 	
-	print(dfmicrograph[origlist].values.tolist())
-	print(dfmicrograph[duplist].values.tolist())
+	#print(dfmicrograph[origlist].values.tolist())
+	#print(dfmicrograph[duplist].values.tolist())
 
 	dffinallist = pd.DataFrame({'Original': dfmicrograph[origlist].values.tolist(), 'Duplicate': dfmicrograph[duplist].values.tolist()})
 	
