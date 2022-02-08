@@ -143,6 +143,7 @@ if __name__=='__main__':
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
 		# Create empty list
 		listccc = [0]*scanrange
+		scanlist = []
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
@@ -164,6 +165,8 @@ if __name__=='__main__':
 		
 		# Parallel
 		result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
+		
+		print(result)
 		
 		for x in range(len(result)): 
 			listccc[x] = result[x]
