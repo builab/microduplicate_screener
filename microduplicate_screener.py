@@ -205,10 +205,10 @@ if __name__=='__main__':
 	dfmicrograph[origlist].to_csv('original.csv', index=False)
 	dfmicrograph[duplist].to_csv('duplicate.csv', index=False)
 	
-	print(dfmicrograph[origlist].values.to_list())
-	print(dfmicrograph[duplist].values.to_list())
+	print(dfmicrograph[origlist].values.tolist())
+	print(dfmicrograph[duplist].values.tolist())
 
-	dffinallist = pd.DataFrame({'Original': dfmicrograph[origlist].values.to_list(), 'Duplicate': dfmicrograph[duplist].values.to_list()})
+	dffinallist = pd.DataFrame({'Original': dfmicrograph[origlist].values.tolist(), 'Duplicate': dfmicrograph[duplist].values.tolist()})
 	
 	dffinallist.to_csv('duplicate.csv', index=False)
 
