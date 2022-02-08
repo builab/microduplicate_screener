@@ -132,9 +132,7 @@ if __name__=='__main__':
 
 	# Parallel binning
 	pool.starmap(binsinglemicrograph, listbinargs)
-	
-	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
-	
+		
 	duplist = {}
 	csv_file = open(csvout, "w")
 	writer = csv.writer(csv_file)
@@ -148,7 +146,7 @@ if __name__=='__main__':
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
-		if i + screenrange > len(dfmicrograph):
+		if i + scanrange > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
 			topend = i + scanrange
