@@ -13,7 +13,7 @@ import multiprocessing as mp
 import errno, os, argparse
 import starfile
 import mrcfile
-import panda as pd
+import pandas as pd
 
 def binmicrograph(dfmicrograph, outdir, binning):
 	''' Binning the micrograph'''
