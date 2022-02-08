@@ -5,6 +5,7 @@
 Created on Sat Feb	5 17:35:42 2022
 
 Micrograph duplicate screener
+Need to introduce an offset = no_images_per_hole
 @author: kbui2
 """
 
@@ -81,6 +82,7 @@ if __name__=='__main__':
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
 	parser.add_argument('--csvout', help='CSV file of CCC',required=False,default="ccc.csv")
+	parser.add_argument('--imagespermove', help='Images per move to use as offset',required=False,default=16)
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="0")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
@@ -97,6 +99,7 @@ if __name__=='__main__':
 	binning = int(args.bin)
 	scanrange = int(args.scanrange)
 	threshold = float(args.threshold)
+	imagespermove = int(args.imagespermove)
 	
 
 
@@ -152,18 +155,21 @@ if __name__=='__main__':
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
-		if i + scanrange + 1 > len(dfmicrograph):
+		if i + imagesperhole >= len(dfmicrograph):
+			break
+			
+		if i + imagesperhole + scanrange  > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
-			topend = i + scanrange + 1
+			topend = i + imagesperhole + scanrange
 		
 		
-		for j in range(i+1, topend):
+		for j in range(i+imagesperhole, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			scanlist.append(target)
 			
-		listim = [im]*(topend - i - 1)
-		listoutdir = [outdir]*(topend - i - 1)
+		listim = [im]*(topend - i - imagesperhole)
+		listoutdir = [outdir]*(topend - i - imagesperhole)
 		
 		# Check
 		print(list(zip(listim, scanlist, listoutdir)))
