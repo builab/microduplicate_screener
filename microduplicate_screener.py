@@ -147,10 +147,10 @@ if __name__=='__main__':
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
-		if i + scanrange > len(dfmicrograph):
+		if i + scanrange + 1 > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
-			topend = i + scanrange
+			topend = i + scanrange + 1
 		
 		
 		for j in range(i+1, topend):
