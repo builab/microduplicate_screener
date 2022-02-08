@@ -99,9 +99,9 @@ if __name__=='__main__':
 	listbinning = [binning]*nomicro
 	dfbin['Outdir'] = listoutdir
 	dfbin['Binning'] = listbinning
+	print(dfbin)
 	# Convert to tuple
-	records = dfbin.to_records(index=False)
-	listbinargs = list(records)
+	listbinargs = list(dfbin.itertuples(index=False, name=None))
 	
 	print(listbinargs)
 
