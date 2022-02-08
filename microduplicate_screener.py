@@ -181,7 +181,7 @@ if __name__=='__main__':
 		# Parallel
 		result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
 		
-		print(result)
+		#print(result)
 		
 		
 		for x in range(len(result)): 
