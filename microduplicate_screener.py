@@ -136,7 +136,7 @@ if __name__=='__main__':
 	# Parallel binning
 	pool.starmap(binsinglemicrograph, listbinargs)
 		
-	duplist = {}
+	duplist = []
 	csv_file = open(csvout, "w")
 	writer = csv.writer(csv_file)
 	
