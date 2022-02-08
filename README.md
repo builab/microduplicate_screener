@@ -7,7 +7,7 @@ The script works in the following way:
 - The duplication should not be in the image groups during one stage movement. In McGill, it is 4 holes per movement and 4 pictures per hole (16 images per move).
 - The duplicate micrograph should be within next number of micrographs (scanRange, default = 32)
 - Since there will be several images collected per hole (4 in cases of McGill data), the duplicate images will be spaced at a multiple of number of images per hole (multiple of 4 in case of McGill)
-- The duplication search is done by aligning each image with the corresponding images within the scan range (using IMOD tiltxcorr). The duplicate image will be identified if the cross correlation coefficient (CCC) threshold is above 0.25 - 0.3.
+- The duplication search is done by aligning each image with the corresponding images within the scan range (using IMOD tiltxcorr). The duplicate image will be identified if the cross correlation coefficient (CCC) threshold is above 0.15 - 0.3.
 
 In addition:
 - The dataset is binned down for quick processing using IMOD newstack (8 times is enough)
@@ -52,6 +52,8 @@ python3 microduplicate_screener/microduplicate_screener.py --i MotionCorr/job002
 **--csvout duplicate.csv** Output csv file showing the original & duplicate micrographs
 
 **--j 12** Number of cores used
+
+**--threshold 0.2** CCC threshold
 
 
 It takes about 2hr to scan through 5000 images from Gatan K3 collected in non-superresolution mode with 12 cores.
