@@ -52,7 +52,7 @@ def matchmicro(ref, target, outdir):
 	# Tiltxcorr
 	tiltxcorr(ref, target, outdir)
 	# Filter target & return fil name
-	imfil = bandpassfilter(ref, outdir)
+	imfil = ref.replace(".mrc", "_fil.mrc")
 	targetfil = bandpassfilter(target, outdir)
 	immrc = mrcfile.open(imfil)
 	targetmrc = mrcfile.open(targetfil)
@@ -143,6 +143,8 @@ if __name__=='__main__':
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
 		# Create empty list
+		imfil = bandpassfilter(ref, outdir)
+		
 		listccc = [0]*scanrange
 		scanlist = []
 		
@@ -168,6 +170,7 @@ if __name__=='__main__':
 		result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
 		
 		print(result)
+		
 		
 		for x in range(len(result)): 
 			listccc[x] = result[x]
