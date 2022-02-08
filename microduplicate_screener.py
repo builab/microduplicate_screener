@@ -39,19 +39,39 @@ def tiltxcorr(ref, target, outdir):
 	os.system(tiltxcorrcmd)
 	os.system(shiftcmd)
 	
-def bandpassfilter(im, outdir, lowpass, lpsigma, highpass, hpsigma):
+def bandpassfilter(im, outdir):
 	''' filtering micrograph. Change value to adjust'''
 	imfil = im.replace(".mrc", "_fil.mrc")
-	filtcmd = "mtffilter -input {:s} -output {:s} -lowpass {:0.2f},{:0.2f} -highpass {:0.2f},{:0.2f}".format(im, imfil, lowpass, lpsigma, highpass, hpsigma);
+	filtcmd = "mtffilter -input {:s} -output {:s} -lowpass {:0.2f},{:0.2f} -highpass {:0.2f},{:0.2f}".format(im, imfil, LOWPASS, LPSIGMA, HIGHPASS, HPSIGMA);
 	print(filtcmd)
 	os.system(filtcmd)
 	return imfil
-		
+
+def matchmicro(ref, target, outdir)
+	# Tiltxcorr
+	tiltxcorr(ref, target, outdir)
+	# Filter target & return fil name
+	imfil = bandpassfilter(ref, outdir)
+	targetfil = bandpassfilter(target, outdir)
+	immrc = mrcfile.open(imfil)
+	targetmrc = mrcfile.open(targetfil)
+	# Corr correlation
+	r = np.corrcoef(immrc.data.flatten(), targetmrc.data.flatten())
+	targetmrc.close()
+	immrc.close()
+	return r[1, 0]
+
 
 
 if __name__=='__main__':
 	# get name of input starfile, output starfile, output stack file
 	print("Remember to load IMOD before")
+	
+	# CONSTANT
+	LOWPASS=0.25
+	LPSIGMA=0.05
+	HIGHPASS=0.04
+	HPSIGMA=0.02
 	
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
@@ -63,6 +83,7 @@ if __name__=='__main__':
 	parser.add_argument('--j', help='Number of processors',required=False,default=1)
 
 
+	
 	args = parser.parse_args()
 	
 	outdir = args.outdir
@@ -109,10 +130,6 @@ if __name__=='__main__':
 	# Parallel binning
 	pool.starmap(binsinglemicrograph, listbinargs)
 	
-	pool.close()
-	pool.join()
-	
-	exit(0)
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
 	duplist = {}
@@ -120,9 +137,7 @@ if __name__=='__main__':
 	for i in range(len(dfmicrograph)):
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
-		imfil = bandpassfilter(im, outdir, 0.25, 0.05, 0.04, 0.02)
 		# Reading image
-		immrc = mrcfile.open(imfil)
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
@@ -131,18 +146,21 @@ if __name__=='__main__':
 		else:
 			topend = i + screenrange
 		
+		scanlist = []
+		
 		for j in range(i+1, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
-			# Tiltxcorr
-			tiltxcorr(im, target, outdir)
-			# Filter target & return fil name
-			targetfil = bandpassfilter(target, outdir, 0.25, 0.05, 0.04, 0.02)
-			targetmrc = mrcfile.open(targetfil)
-			# Corr correlation
-			r = np.corrcoef(immrc.data.flatten(), targetmrc.data.flatten())
-			ccc[i, j-i-1] = r[1, 0]
-			targetmrc.close()
-		immrc.close()
+			scanlist.append(target)
+			
+		listim = [im]*(topend - i - 1)
+		listoutdir = [outdir]*(topend - i - 1)
+		
+		# Check
+		print(list(zip(listim, scanlist, listoutdir)))
+		
+		# Parallel
+		pool.starmap(match, list(zip(listim, scanlist, listoutdir)))
+		
 		# Pick out the most similar one
 		peak = np.argmax(ccc[i, :])
 		print(peak)
@@ -151,6 +169,8 @@ if __name__=='__main__':
 			
 			
 	
+	pool.close()
+	pool.join()
 	np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
 	dfmicrograph[duplist].to_csv('duplicate.csv')
 
