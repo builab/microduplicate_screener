@@ -14,6 +14,7 @@ import errno, os, argparse
 import starfile
 import mrcfile
 import pandas as pd
+import csv
 
 def binmicrograph(dfmicrograph, outdir, binning):
 	''' Binning the micrograph'''
@@ -76,6 +77,7 @@ if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('--i', help='Input star file (from MotionCorr or CtfFind)',required=True)
 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
+	parser.add_argument('--csvout', help='CSV file of CCC',required=False,default="ccc.csv")
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="1")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
@@ -87,9 +89,10 @@ if __name__=='__main__':
 	args = parser.parse_args()
 	
 	outdir = args.outdir
+	csvout = args.csvout
 	nocpu = int(args.j)
 	binning = int(args.bin)
-	screenrange = int(args.scanrange)
+	scanrange = int(args.scanrange)
 	threshold = float(args.threshold)
 	
 
@@ -133,20 +136,23 @@ if __name__=='__main__':
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
 	duplist = {}
+	csv_file = open(csvout, "w")
+	writer = csv.writer(csv_file)
+	
 	# loop through micrograph
 	for i in range(len(dfmicrograph)):
 		# Define range
 		im = outdir + '/' + os.path.basename(dfmicrograph[i]);
-		# Reading image
+		# Create empty list
+		listccc = [0]*scanrange
 		
 		
 		print("### Scanning duplicate for {:s} ###".format(im))
 		if i + screenrange > len(dfmicrograph):
 			topend = len(dfmicrograph)
 		else:
-			topend = i + screenrange
+			topend = i + scanrange
 		
-		scanlist = []
 		
 		for j in range(i+1, topend):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
@@ -159,23 +165,28 @@ if __name__=='__main__':
 		print(list(zip(listim, scanlist, listoutdir)))
 		
 		# Parallel
-		pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
+		result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
+		
+		for x in range(len(result)): 
+			listccc[x] = result[x]
+			
+		# Write CSV row
+		writer.writerow(listccc)
 		
 		# Pick out the most similar one
-		peak = np.argmax(ccc[i, :])
+		peak = np.argmax(listccc)
 		print(peak)
-		if ccc[i, peak] > threshold:
+		if list[peak] > threshold:
 			duplist.append(i + peak + 1)
 			
 			
 	
-	pool.close()
-	pool.join()
-	np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
+
+	csv_file.close()
+	#np.savetxt("ccc.csv", ccc, delimiter=",", fmt='%.3f')
 	dfmicrograph[duplist].to_csv('duplicate.csv')
 
-		
-
-	
 	# Done parallel processing
+	pool.close()
+	pool.join()
 
