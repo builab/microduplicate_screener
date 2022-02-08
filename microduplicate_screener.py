@@ -32,10 +32,11 @@ def binsinglemicrograph(micrograph, outdir, binning):
 
 def tiltxcorr(ref, target, outdir):
 	''' Correlate micrograph'''
-	tiltxcorrcmd = "tiltxcorr -reference {:s} -input {:s} -output {:s}/out.xf -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05".format(ref, target, outdir);
+	xf = target.replace(".mrc", ".xf")
+	tiltxcorrcmd = "tiltxcorr -reference {:s} -input {:s} -output {:s} -angles 0 -sigma1 0.03 -radius2 0.25 -sigma2 0.05".format(ref, target, xf);
 	print(tiltxcorrcmd)
 	targetout = target.replace(".mrc", "_xf.mrc");
-	shiftcmd = "newstack -in {:s} -ou {:s} -xform {:s}/out.xf".format(target, targetout, outdir);
+	shiftcmd = "newstack -in {:s} -ou {:s} -xform {:s}".format(target, targetout, xf);
 	print(shiftcmd)
 	os.system(tiltxcorrcmd)
 	os.system(shiftcmd)
@@ -53,14 +54,15 @@ def matchmicro(ref, target, outdir):
 	tiltxcorr(ref, target, outdir)
 	# Filter target & return fil name
 	imfil = ref.replace(".mrc", "_fil.mrc")
-	targetfil = bandpassfilter(target, outdir)
+	targetout = target.replace(".mrc", "_xf.mrc");
+	targetfil = bandpassfilter(targetout, outdir)
 	immrc = mrcfile.open(imfil)
 	targetmrc = mrcfile.open(targetfil)
 	# Corr correlation
 	r = np.corrcoef(immrc.data.flatten(), targetmrc.data.flatten())
 	targetmrc.close()
 	immrc.close()
-	print(r[1, 0])
+	#print(r[1, 0])
 	return r[1, 0]
 
 
