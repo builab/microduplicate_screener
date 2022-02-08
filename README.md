@@ -60,7 +60,7 @@ You can also use the slurm_dupscanner.sh for SLURM submission
 
 You can then eliminate the duplicate micrographs from star file using some star file manipulator such as [starparser](https://github.com/sami-chaaban/starparser) from Sami Chabaan.
 
-### Extract duplicate micrographs only
+#### Remove duplicate micrographs only
 ```
 grep -v 'Duplicate'  duplicate.csv | awk '{print $2}' > micrographs_to_be_removed.txt
 
