@@ -60,6 +60,7 @@ def matchmicro(ref, target, outdir):
 	r = np.corrcoef(immrc.data.flatten(), targetmrc.data.flatten())
 	targetmrc.close()
 	immrc.close()
+	print(r[1, 0])
 	return r[1, 0]
 
 
