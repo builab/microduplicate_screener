@@ -6,6 +6,7 @@ Created on Sat Feb	5 17:35:42 2022
 
 Micrograph duplicate screener
 Need to introduce an offset = no_images_per_move
+Also, it is nice to use multiple of no_images_per_move to make it easy (multiple of image group = 4)
 @author: kbui2
 """
 
@@ -83,6 +84,7 @@ if __name__=='__main__':
 	parser.add_argument('--outdir', help='Output folder (Temp)',required=False,default="dupscreener")
 	parser.add_argument('--csvout', help='CSV file of CCC',required=False,default="ccc.csv")
 	parser.add_argument('--imagespermove', help='Images per move to use as offset',required=False,default=16)
+	parser.add_argument('--imagesperhole', help='Images per hole',required=False,default=4)
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="0")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
@@ -100,7 +102,8 @@ if __name__=='__main__':
 	scanrange = int(args.scanrange)
 	threshold = float(args.threshold)
 	imagespermove = int(args.imagespermove)
-	
+	imagesperhole = int(args.imagesperhole)
+
 
 
 	try:
@@ -164,12 +167,12 @@ if __name__=='__main__':
 			topend = i + imagespermove + scanrange
 		
 		
-		for j in range(i+imagespermove, topend):
+		for j in range(i+imagespermove, topend, imagesperhole):
 			target = outdir + '/' + os.path.basename(dfmicrograph[j])
 			scanlist.append(target)
 			
-		listim = [im]*(topend - i - imagespermove)
-		listoutdir = [outdir]*(topend - i - imagespermove)
+		listim = [im]*len(range(i+imagespermove, topend, imagesperhole))
+		listoutdir = [outdir]*len(range(i+imagespermove, topend, imagesperhole))
 		
 		# Check
 		print(list(zip(listim, scanlist, listoutdir)))
@@ -181,7 +184,7 @@ if __name__=='__main__':
 		
 		
 		for x in range(len(result)): 
-			listccc[x] = result[x]
+			listccc[x*imagesperhole] = result[x]
 			
 		# Write CSV row
 		writer.writerow(['{:1.4f}'.format(x) for x in listccc])
