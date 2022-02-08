@@ -94,17 +94,17 @@ if __name__=='__main__':
 	# Binning
 	print("Binning data by {:d}".format(binning))
 	pool = mp.Pool(nocpu)
-	# Prep input
+	# Prep input, convert Series to Dataframe
 	dfbin = dfmicrograph.to_frame()
 	listoutdir = [outdir]*nomicro
 	listbinning = [binning]*nomicro
 	dfbin['Outdir'] = listoutdir
 	dfbin['Binning'] = listbinning
-	print(dfbin)
+	#print(dfbin)
 	# Convert to tuple
 	listbinargs = list(dfbin.itertuples(index=False, name=None))
 	
-	print(listbinargs)
+	#print(listbinargs)
 
 	# Parallel binning
 	pool.starmap(binsinglemicrograph, listbinargs)
