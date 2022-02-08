@@ -47,7 +47,7 @@ def bandpassfilter(im, outdir):
 	os.system(filtcmd)
 	return imfil
 
-def matchmicro(ref, target, outdir)
+def matchmicro(ref, target, outdir):
 	# Tiltxcorr
 	tiltxcorr(ref, target, outdir)
 	# Filter target & return fil name
