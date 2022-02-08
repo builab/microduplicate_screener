@@ -102,6 +102,8 @@ if __name__=='__main__':
 	# Convert to tuple
 	records = dfbin.to_records(index=False)
 	listbinargs = list(records)
+	
+	print(listbinargs)
 
 	# Parallel binning
 	pool.starmap(binsinglemicrograph, listbinargs)
@@ -109,7 +111,7 @@ if __name__=='__main__':
 	pool.close()
 	pool.join()
 	
-	
+	exit(0)
 	ccc = np.zeros((len(dfmicrograph), screenrange), dtype=float);
 	
 	duplist = {}
