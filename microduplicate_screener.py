@@ -181,7 +181,7 @@ if __name__=='__main__':
 		# Pick out the most similar one
 		peak = np.argmax(listccc)
 		print(peak)
-		if list[peak] > threshold:
+		if listccc[peak] > threshold:
 			duplist.append(i + peak + 1)
 			
 			
