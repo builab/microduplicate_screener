@@ -164,9 +164,9 @@ if __name__=='__main__':
 		print(list(zip(listim, scanlist, listoutdir)))
 		
 		# Parallel
-		result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
+		#result = pool.starmap(matchmicro, list(zip(listim, scanlist, listoutdir)))
 		
-		print(result)
+		#print(result)
 		
 		for x in range(len(result)): 
 			listccc[x] = result[x]
