@@ -15,6 +15,8 @@ In addition:
 
 **NOTE:** If multiple shot per hole is used, all the shots from the same holes should be duplicated. You can use this pattern to recognize whether the duplicate is true duplicate.
 
+**NOTE:** The micrograph order is sorted by alphabettical after reading from the star file. So if your micrographs are not in alphabetial order, the script will not work.
+
 
 
 ## Installation
