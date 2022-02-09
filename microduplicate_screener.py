@@ -5,8 +5,7 @@
 Created on Sat Feb	5 17:35:42 2022
 
 Micrograph duplicate screener
-Need to introduce an offset = no_images_per_move
-Also, it is nice to use multiple of no_images_per_move to make it easy (multiple of image group = 4)
+Somehow, set imagesperhole=1 does not work. Setting it to 4, 8, 16 ok.
 @author: kbui2
 """
 
