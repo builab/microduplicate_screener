@@ -88,7 +88,7 @@ if __name__=='__main__':
 	parser.add_argument('--bin', help='Binning',required=False,default=8)
 	parser.add_argument('--opticsless', help='With or without opticsgroup. Value 1 or 0',required=False,default="0")
 	parser.add_argument('--scanrange', help='Range for scanning',required=False,default=48)
-	parser.add_argument('--threshold', help='CCC threshold to set as duplicate',required=False,default=0.20)
+	parser.add_argument('--threshold', help='CCC threshold to set as duplicate',required=False,default=0.15)
 	parser.add_argument('--j', help='Number of processors',required=False,default=1)
 
 
