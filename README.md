@@ -68,7 +68,7 @@ You can then eliminate the duplicate micrographs from star file using some star 
 
 #### Remove duplicate micrographs only
 ```
-grep -v 'Duplicate'  duplicate.csv | awk '{print $2}' > micrographs_to_be_removed.txt
+grep -v 'Duplicate'  duplicate.csv | awk -F, '{print $2}' > micrographs_to_be_removed.txt
 
 starparser --i MotionCorr/job002/corrected_micrographs.star --o clean_micrographs.star --remove_mics_fromlist --f micrographs_to_be_removed.txt 
 ```
