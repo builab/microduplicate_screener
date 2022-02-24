@@ -30,7 +30,8 @@ Easy installation involved anaconda:
 - Install starfile, mrcfile: 
 
 **_pip install mrcfile_**
-**_pip install starfile_***
+
+**_pip install starfile_**
 
 - Clone the duplicate scanner: git clone https://github.com/builab/microduplicate_screener.git
 
