@@ -28,6 +28,7 @@ Easy installation involved anaconda:
 - Set up a fresh conda environment with Python >= 3.6: **conda create -n ds python=3.6**
 - Activate the environment: conda activate ds
 - Install starfile, mrcfile: 
+
 **_pip install mrcfile_**
 **_pip install starfile_***
 
